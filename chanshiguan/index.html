@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="20 个养猫日常瞬间，测出你在猫眼里到底是什么人。">
+<title>你是什么样的铲屎官</title>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
+<link rel="stylesheet" href="fonts/zcool.css">
+<style>
+/* Layout: one phone-width column, three views (cover, quiz, result) swapped in place. Single deliberate light look: catnip mint + ink + salmon. */
+:root{
+  --bg:#E6F2EC; --card:#FFFFFF; --ink:#1F2A37; --muted:#5E6B78; --line:#CFE0D7;
+  --mint:#2FA37C; --mint-soft:#D3EDE2; --pop:#FF7466; --pop-soft:#FFE3DF;
+  --f-display:"ZCOOL KuaiLe","PingFang SC","Microsoft YaHei",sans-serif;
+  --f-body:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
+  color-scheme:light;
+}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.65;
+  background-image:radial-gradient(var(--line) 1.2px,transparent 1.2px);background-size:22px 22px}
+.app{max-width:460px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;
+  padding-block:20px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.view{display:flex;flex-direction:column;gap:18px}
+h1,h2{font-family:var(--f-display);font-weight:400;margin:0;text-wrap:balance;letter-spacing:.02em}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible{outline:3px solid var(--pop);outline-offset:2px}
+.btn{background:var(--ink);color:#fff;border-radius:999px;padding:14px 22px;font-weight:700;font-size:17px;
+  box-shadow:0 4px 0 #0d141c;transition:transform .08s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #0d141c}
+.btn.ghost{background:var(--card);color:var(--ink);box-shadow:0 4px 0 var(--line);border:2px solid var(--ink)}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row .btn{flex:1 1 140px}
+
+/* cover */
+.cover{align-items:center;text-align:center;padding-top:12px}
+.cover canvas{width:200px;height:200px}
+.cover h1{font-size:clamp(36px,10vw,46px);line-height:1.15}
+.cover h1 em{font-style:normal;color:var(--pop)}
+.cover .sub{color:var(--muted);max-width:30ch}
+.facts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.facts span{font-size:13px;background:var(--card);border:1.5px solid var(--line);border-radius:999px;padding:3px 12px}
+.cover .btn{width:100%;max-width:320px}
+.small{font-size:12.5px;color:var(--muted)}
+
+/* quiz */
+.qtop{display:flex;align-items:center;gap:12px}
+.back{font-size:14px;color:var(--muted);padding:6px 4px;white-space:nowrap}
+.back:disabled{opacity:.3;cursor:default}
+.bar{flex:1;height:10px;background:var(--card);border-radius:99px;border:1.5px solid var(--ink);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--mint);width:0;transition:width .25s}
+.count{font-variant-numeric:tabular-nums;font-size:14px;font-weight:700;white-space:nowrap}
+.qcard{background:var(--card);border:2px solid var(--ink);border-radius:18px;padding:22px 20px;box-shadow:6px 6px 0 var(--mint)}
+.qno{font-size:12px;letter-spacing:.14em;color:var(--mint);font-weight:700}
+.qtext{font-family:var(--f-display);font-size:25px;line-height:1.35;margin-top:6px}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{text-align:left;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:13px 16px;font-size:15.5px;
+  display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;transition:border-color .12s,background .12s}
+.opt b{font-size:13px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--mint-soft);color:var(--mint);margin-top:1px}
+.opt:hover{border-color:var(--ink)}
+.opt.on{border-color:var(--pop);background:var(--pop-soft)}
+.opt.on b{background:var(--pop);color:#fff}
+
+/* result */
+.friend{background:var(--pop-soft);border:1.5px dashed var(--pop);border-radius:12px;padding:10px 14px;font-size:14px;text-align:center}
+.rcard{background:var(--card);border:2px solid var(--ink);border-radius:20px;overflow:hidden;box-shadow:6px 6px 0 var(--pop)}
+.rhead{padding:22px 20px 10px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
+.rhead canvas{width:170px;height:170px}
+.rlabel{font-size:12px;letter-spacing:.16em;color:var(--muted)}
+.rname{font-size:40px;line-height:1.1}
+.rtitle{font-weight:700;color:var(--pop)}
+.rare{font-size:12px;background:var(--ink);color:#fff;border-radius:99px;padding:2px 10px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:4px}
+.tags span{font-size:13px;background:var(--mint-soft);border-radius:99px;padding:2px 10px}
+.rbody{padding:6px 20px 22px;display:flex;flex-direction:column;gap:16px}
+.desc{font-size:15.5px}
+.says{background:var(--bg);border-radius:14px;padding:12px 14px;font-size:15px;position:relative}
+.says small{display:block;font-size:12px;color:var(--muted);letter-spacing:.08em;margin-bottom:2px}
+.radar{width:100%;max-width:380px;height:auto;align-self:center}
+.dims{display:flex;flex-direction:column;gap:9px}
+.dim{display:grid;grid-template-columns:5.6em 1fr 2.4em;gap:10px;align-items:center;font-size:14px}
+.dim .t{height:12px;border-radius:99px;background:var(--bg);overflow:hidden}
+.dim .t i{display:block;height:100%;border-radius:99px;background:var(--mint)}
+.dim .v{font-variant-numeric:tabular-nums;text-align:right;font-weight:700}
+.rel{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rel button{background:var(--bg);border-radius:14px;padding:10px 12px;text-align:left;display:flex;flex-direction:column;gap:2px;min-width:0}
+.rel small{font-size:12px;color:var(--muted)}
+.rel strong{font-family:var(--f-display);font-weight:400;font-size:19px}
+.rel span{font-size:12.5px;color:var(--muted)}
+.sec{font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--muted)}
+.poster{display:flex;flex-direction:column;gap:10px;align-items:center}
+.poster img{width:100%;max-width:340px;border-radius:14px;border:2px solid var(--ink)}
+.linkbox{width:100%;font-size:13px;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;word-break:break-all;user-select:all}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:#fff;
+  padding:8px 16px;border-radius:99px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.gallery button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:8px 2px}
+.gallery button.me{border-color:var(--pop);background:var(--pop-soft)}
+.gallery canvas{width:52px;height:52px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@keyframes pop{from{transform:scale(.96);opacity:.4}to{transform:none;opacity:1}}
+.view.enter{animation:pop .22s ease-out}
+</style>
+
+</head>
+<body>
+<div class="app">
+  <section class="view cover" id="v-cover">
+    <canvas id="coverCat" width="400" height="400" aria-hidden="true"></canvas>
+    <h1>测测你是<br>什么样的<em>铲屎官</em></h1>
+    <p class="sub">20 个养猫日常瞬间，测出你在猫眼里到底是什么人。</p>
+    <div class="facts"><span>20 题</span><span>约 2 分钟</span><span>你是哪一种？</span></div>
+    <button class="btn" id="startBtn">开始测试</button>
+    <p class="small">纯属娱乐，没有对错。按第一反应选就好。</p>
+  </section>
+
+  <section class="view" id="v-quiz" hidden>
+    <div class="qtop">
+      <button class="back" id="backBtn">‹ 上一题</button>
+      <div class="bar"><i id="barFill"></i></div>
+      <span class="count" id="count">1 / 20</span>
+    </div>
+    <div class="qcard">
+      <div class="qno" id="qno">第 1 题</div>
+      <div class="qtext" id="qtext"></div>
+    </div>
+    <div class="opts" id="opts"></div>
+  </section>
+
+  <section class="view" id="v-result" hidden>
+    <div class="friend" id="friendNote" hidden>这是朋友测出的结果。你是哪一种？</div>
+    <article class="rcard">
+      <div class="rhead">
+        <canvas id="resCat" width="340" height="340" aria-hidden="true"></canvas>
+        <span class="rlabel" id="rlabel">你是</span>
+        <h2 class="rname" id="rname"></h2>
+        <p class="rtitle" id="rtitle"></p>
+        <span class="rare" id="rare" hidden>稀有结果</span>
+        <div class="tags" id="rtags"></div>
+      </div>
+      <div class="rbody">
+        <p class="desc" id="rdesc"></p>
+        <div class="says"><small>你的猫对你的评价</small><span id="rsays"></span></div>
+        <div class="sec">铲屎五维</div>
+        <canvas class="radar" id="rdims" width="720" height="500" role="img" aria-label="铲屎五维雷达图"></canvas>
+        <div class="rel" id="rrel"></div>
+      </div>
+    </article>
+    <div class="row" id="selfActions">
+      <button class="btn" id="posterBtn">分享到朋友圈</button>
+      <button class="btn ghost" id="shareBtn">复制结果链接</button>
+    </div>
+    <div class="row" id="friendActions" hidden>
+      <button class="btn" id="tryBtn">我也测一测</button>
+    </div>
+    <div class="poster" id="posterBox" hidden>
+      <img id="posterImg" alt="铲屎官测试朋友圈分享图">
+      <p class="small">长按图片保存到相册，再发到朋友圈</p>
+    </div>
+    <div class="linkbox" id="linkBox" hidden></div>
+    <button class="btn ghost" id="againBtn">再测一次</button>
+  </section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="qrcode.js"></script>
+<script>
+// dims: D 宠溺 S 花钱 H 晒猫 K 讲科学 O 被拿捏
+const DIMS=["D","S","H","K","O"];
+const Q=[
+["凌晨四点，猫在你脸上踩奶。",[["迷迷糊糊摸摸它，想踩多久踩多久",{D:2,O:1}],["立刻摸手机录下来，这素材太珍贵了",{H:2,D:1}],["抱下床，关门。睡眠是底线",{K:1}],["爬起来开罐头，它肯定是饿了",{O:2,S:1}]]],
+["猫把你桌上的水杯推到了地上。",[["先看它爪子湿没湿、有没有被玻璃划到",{D:2}],["拍照发群：“看看它干的好事”",{H:2}],["盯着它的眼睛，严肃地说“不可以”",{K:1}],["默默擦干，顺手把桌上东西全收走，桌面从此归它",{O:2}]]],
+["你最近一笔为猫花的钱是？",[["一包十几块的猫条",{D:1}],["研究了一周配料表才下单的主食罐",{K:2,S:1}],["两千多的全自动猫砂盆，眼都没眨",{S:2,O:1}],["想不起来，好像有阵子没买了",{}]]],
+["你的手机相册里，猫占了多少？",[["不到一成，偶尔拍拍",{}],["三成左右，拍得好看的才留",{H:1}],["一大半，内存天天告急",{H:2,D:1}],["我专门给它开了个社交账号",{H:2,S:1}]]],
+["选猫粮时，你第一眼看什么？",[["配料表第一位是不是肉，钙磷比多少",{K:2}],["它爱不爱吃，不吃就换",{O:2,D:1}],["价格，够吃就行",{}],["最近博主都在推哪款",{H:1,S:1}]]],
+["猫跳上餐桌，盯着你的饭。",[["抱下去，桌上不许上猫",{K:2}],["分它一小口，就一小口",{D:1,O:1}],["端着碗换个地方吃",{O:2}],["拍下来，配文“饭搭子”",{H:2}]]],
+["朋友来家里做客，猫躲进了床底。",[["随它去，猫有猫的社交节奏",{K:1}],["把它抱出来：“快看我家宝贝”",{H:2,D:1}],["拿零食一点点哄它出来",{S:1,D:1}],["整晚说话都压着嗓子，怕吓到它",{O:2,D:1}]]],
+["猫生病了，医生说要花几千块。",[["治，不用想",{S:2,D:1}],["先查资料、问两家医院再定方案",{K:2,S:1}],["一边哭一边刷卡，顺手发了条朋友圈",{D:2,H:1}],["问问有没有更便宜的治法",{K:1}]]],
+["你要出差三天，猫怎么办？",[["请上门喂养，每天要视频连线",{S:1,D:1,O:1}],["自动喂食器加摄像头，远程盯着",{S:2,K:1}],["放足粮和水，它自己能行",{}],["那就不去了，或者把它带上",{O:2,D:2}]]],
+["猫在你新买的沙发上磨爪子。",[["旁边放个猫抓板，喷点猫薄荷引导",{K:2,S:1}],["沙发嘛，本来就是给它买的",{D:1,O:2}],["拍视频：“新沙发，卒”",{H:2}],["拍一下桌子吓它，规矩要立",{K:1}]]],
+["有人说“猫就是个宠物，养着玩的”。",[["当场开辩，猫是家人",{D:2}],["不跟他吵，回家多抱它一会儿",{D:1}],["甩过去一篇猫科动物行为学科普",{K:2}],["发条朋友圈阴阳一下",{H:2}]]],
+["你和猫平时怎么称呼对方？",[["我是妈妈 / 爸爸，它是宝宝",{D:2}],["它是主子，我是奴才",{O:2}],["它叫它的名字，我就是我",{}],["它是顶流，我是经纪人",{H:2,S:1}]]],
+["猫半夜在家里跑酷。",[["白天多陪它玩逗猫棒，把精力耗掉",{K:2}],["起来陪它一起跑",{O:2,D:1}],["戴上耳塞，随它去",{}],["录下来，配个 BGM",{H:2}]]],
+["猫的生日，你一般怎么过？",[["它生日是哪天来着",{}],["买个猫咪蛋糕，拍照留念",{H:1,S:1,D:1}],["定制礼物加一套写真",{S:2,H:1}],["带它去做一次年度体检",{K:2,S:1}]]],
+["猫生气了，一整天不理你。",[["开个罐头赔罪",{O:2,S:1}],["跟在它后面一直说对不起",{O:1,D:2}],["猫的气来得快去得快，等着就行",{K:1}],["发帖求助：“猫不理我怎么办”",{H:2}]]],
+["你家的猫用品现在是什么规模？",[["一个碗一个砂盆，够用",{}],["猫爬架、猫窝、隧道，它的地盘比你的大",{S:2,D:1}],["每样都是看完测评对比后才买的",{K:2,S:1}],["大部分它都看不上，它只爱快递纸箱",{O:1,S:1}]]],
+["给猫剪指甲的时候。",[["一手捏爪一手剪，五分钟搞定",{K:2}],["每次都要两个人加一条浴巾，像打仗",{O:1,D:1}],["送宠物店，花钱解决",{S:2}],["它不乐意，那就下次再说",{O:2}]]],
+["你最近一条朋友圈发的是？",[["猫",{H:2}],["我和猫",{H:1,D:1}],["不是猫，我不在朋友圈发猫",{}],["一篇猫粮测评或者养猫科普",{K:1,H:1}]]],
+["晚上睡觉，床上怎么分？",[["猫睡正中间，我蜷在床边",{O:2,D:1}],["它有自己的猫窝，各睡各的",{K:1}],["它爱睡哪睡哪，我不管",{}],["抱着它睡，它挣扎也要抱",{D:2}]]],
+["如果猫突然会说话，你最想听它说？",[["“谢谢你把我捡回家”",{D:2}],["“今天这个罐头还行”",{O:1,S:1}],["“我很健康，别担心”",{K:2}],["“帮我把这条发到网上”",{H:2}]]],
+];
+// prototypes in percentile space (0..1)
+const R={
+ A:[1,.5,.6,.25,.5],
+ B:[.65,.55,1,.2,.35],
+ C:[.5,.6,.2,1,.3],
+ D:[.1,.15,.15,.5,.2],
+ E:[.5,1,.5,.3,.6],
+ F:[.45,.15,.5,0,.5],
+ G:[.15,.35,.3,.8,0],
+ H:[.55,.65,.2,.4,1],
+};
+const PAGE_URL="https://keningz.github.io/chanshiguan/";
+const DIM_NAMES={D:"宠溺指数",S:"花钱指数",H:"晒猫指数",K:"讲究指数",O:"被拿捏指数"};
+const T={
+ A:{name:"人形猫爬架",title:"猫在哪，你的心就在哪",fur:"#F4ECE1",mask:"#B98B6A",
+  desc:"你对猫的爱几乎是生理性的。看到它就想吸，摸到就不想撒手，叫它名字会自动带上叠词。你的壁纸、锁屏和头像大概率都是它。它是你的情绪稳定剂，也是你每天准时回家的理由。",
+  tags:["叠词大师","吸猫成瘾","随叫随到的怀抱"],says:"这个人类有点黏，但抱起来还挺暖和的。",match:"F",rival:"G"},
+ B:{name:"赛博晒猫博主",title:"你的猫是整条街的顶流",fur:"#F2A65A",stripe:"#D9803A",
+  desc:"你是猫最忠实的摄影师、剪辑师和经纪人。它打个哈欠你能拍出九宫格，它翻个白眼你能配出三行文案。朋友没去过你家，但都认识你家的猫。你晒猫不是炫耀，是觉得这么可爱的东西不能只有你看到。",
+  tags:["九宫格选手","文案鬼才","顶流经纪人"],says:"又来？把我拍胖了你就完了。",match:"E",rival:"D"},
+ C:{name:"养猫学术派",title:"配料表比你的体检报告还熟",fur:"#C9CFD8",
+  desc:"你养猫像在读研。钙磷比、牛磺酸、粗蛋白、猫砂结团率，张口就来。买任何东西前都要看三篇测评。你的猫可能不知道你有多爱它，但它的每一项体检指标都漂亮得像教科书。",
+  tags:["成分党","行走的猫科百科","理性派宠爱"],says:"饭是挺好吃的，就是每顿都要先被记录一下。",match:"G",rival:"F"},
+ D:{name:"佛系室友",title:"你和猫，互不打扰的合租关系",fur:"#A8957A",stripe:"#6E5D47",rare:true,
+  desc:"你们像两个默契的室友：你上班，它睡觉；你回家，它接着睡。你不会给它过生日，也不会为它囤一屋子用品，但它饿的时候碗里总有粮。最舒服的关系，是谁也不用讨好谁。",
+  tags:["互不打扰","松弛感满分","猫界好房东"],says:"这个人类不错，从来不烦我。",match:"G",rival:"A"},
+ E:{name:"人形碎钞机",title:"你吃泡面，猫吃进口罐头",fur:"#E9C57E",
+  desc:"给自己买东西要比价三天，给猫买东西眼都不眨。猫爬架比你的床贵，猫粮比你的外卖贵，自动猫砂盆一台不够还想买第二台。你的消费观很简单：赚钱就是为了它。",
+  tags:["购物车全是猫","双标消费","猫界金主"],says:"纸箱其实就够了，不过你买的那些我也会勉强睡一睡。",match:"B",rival:"D"},
+ F:{name:"快乐教育派",title:"规矩是什么？开心就好",fur:"#FFFFFF",patch1:"#F2A65A",patch2:"#3A3A42",
+  desc:"你信奉快乐养猫：想上桌就上桌，想吃一口就给一口，沙发抓烂了就再买一个。你不太看配料表，也不太管它几点睡，只在乎它今天开不开心。它可能是全小区最自由的猫，也可能是最胖的那只。",
+  tags:["放养派","有求必应","快乐至上"],says:"这里是猫的天堂，就是饭还可以再多一点。",match:"A",rival:"C"},
+ G:{name:"猫界班主任",title:"爱它，但规矩不能破",fur:"#34343D",
+  desc:"你是家里唯一能让猫听话的人。桌子不许上，凌晨不开饭，剪指甲五分钟搞定。你不是不爱它，只是相信好习惯才是长久的爱。猫有点怕你，但不舒服的时候，第一个找的也是你。",
+  tags:["原则怪","靠谱监护人","严格但温柔"],says:"这个人类很凶，但跟着这个人有饭吃。",match:"C",rival:"H"},
+ H:{name:"猫的打工仔",title:"名义上你养它，实际上它雇你",fur:"#FFFFFF",patch2:"#2B2B33",
+  desc:"你是猫的全职员工：它一叫你就起床，它一瞪你就开罐头，它睡床中间你就蜷在床边。你赚的每一分钱都要先过它的审批。最可怕的是，你还乐在其中。",
+  tags:["24 小时待命","凌晨四点开饭","甘之如饴"],says:"新来的员工表现尚可。罐头请准时。",match:"E",rival:"G"},
+};
+
+/* ---------- scoring ---------- */
+const STATS=DIMS.map(d=>{let m=0,v=0;for(const [,opts] of Q){const xs=opts.map(o=>o[1][d]||0);const mu=xs.reduce((a,b)=>a+b)/4;m+=mu;v+=xs.reduce((a,b)=>a+(b-mu)**2,0)/4}return[m,Math.sqrt(v)]});
+function erf(x){const t=1/(1+.3275911*Math.abs(x));const y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-.284496736)*t+.254829592)*t*Math.exp(-x*x);return x>=0?y:-y}
+const Phi=z=>.5*(1+erf(z/Math.SQRT2));
+function score(ans){
+  const s={};ans.forEach((a,i)=>{const o=Q[i][1][a][1];for(const k in o)s[k]=(s[k]||0)+o[k]});
+  const p=DIMS.map((d,j)=>Phi(((s[d]||0)-STATS[j][0])/STATS[j][1]));
+  let best,bd=1e9;for(const k in R){const dd=R[k].reduce((a,v,j)=>a+(v-p[j])**2,0);if(dd<bd){bd=dd;best=k}}
+  return{type:best,pct:p.map(x=>Math.max(1,Math.min(99,Math.round(x*100))))};
+}
+
+/* ---------- cat drawing ---------- */
+const INK="#1F2A37";
+function drawCat(ctx,S,k){
+  const t=T[k];ctx.save();ctx.clearRect(0,0,S,S);ctx.lineJoin="round";ctx.lineCap="round";
+  const cx=S/2,cy=S*.58,rx=S*.34,ry=S*.28,lw=S*.022;
+  const ear=(dir)=>{ctx.beginPath();ctx.moveTo(cx+dir*rx*.92,cy-ry*.25);ctx.lineTo(cx+dir*rx*.78,cy-ry*1.35);ctx.lineTo(cx+dir*rx*.2,cy-ry*.88);ctx.closePath()};
+  const head=()=>{ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2)};
+  // ears
+  [-1,1].forEach(d=>{ear(d);ctx.fillStyle=t.fur;ctx.fill();
+    if(k==="F"){ctx.save();ear(d);ctx.clip();ctx.fillStyle=d<0?t.patch1:t.patch2;ctx.fillRect(0,0,S,S);ctx.restore()}
+    if(k==="H"&&d>0){ctx.save();ear(d);ctx.clip();ctx.fillStyle=t.patch2;ctx.fillRect(0,0,S,S);ctx.restore()}
+    if(k==="A"){ctx.save();ear(d);ctx.clip();ctx.fillStyle=t.mask;ctx.fillRect(0,0,S,S);ctx.restore()}
+    ear(d);ctx.lineWidth=lw;ctx.strokeStyle=INK;ctx.stroke();
+    ctx.beginPath();ctx.moveTo(cx+d*rx*.74,cy-ry*.5);ctx.lineTo(cx+d*rx*.7,cy-ry*1.08);ctx.lineTo(cx+d*rx*.38,cy-ry*.82);ctx.closePath();
+    ctx.fillStyle=k==="G"?"#5A4A55":"#F7B6AE";ctx.fill()});
+  // head + markings
+  head();ctx.fillStyle=t.fur;ctx.fill();
+  ctx.save();head();ctx.clip();
+  if(k==="A"){ctx.fillStyle=t.mask;ctx.globalAlpha=.55;ctx.beginPath();ctx.ellipse(cx,cy+ry*.12,rx*.42,ry*.5,0,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1}
+  if(t.stripe){ctx.strokeStyle=t.stripe;ctx.lineWidth=S*.03;[-1,0,1].forEach(i=>{ctx.beginPath();ctx.moveTo(cx+i*S*.06,cy-ry*1.02);ctx.lineTo(cx+i*S*.045,cy-ry*.55);ctx.stroke()})}
+  if(k==="F"){ctx.fillStyle=t.patch1;ctx.beginPath();ctx.ellipse(cx-rx*.7,cy-ry*.5,rx*.45,ry*.5,.4,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=t.patch2;ctx.beginPath();ctx.ellipse(cx+rx*.75,cy-ry*.35,rx*.38,ry*.42,-.3,0,Math.PI*2);ctx.fill()}
+  if(k==="H"){ctx.fillStyle=t.patch2;ctx.beginPath();ctx.ellipse(cx+rx*.5,cy-ry*.35,rx*.48,ry*.55,-.2,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.ellipse(cx-rx*.85,cy+ry*.5,rx*.25,ry*.3,0,0,Math.PI*2);ctx.fill()}
+  ctx.restore();
+  head();ctx.lineWidth=lw;ctx.strokeStyle=INK;ctx.stroke();
+  const dark=k==="G";
+  const fg=dark?"#F3E6B0":INK;
+  // eyes
+  const ex=rx*.42,ey=cy-ry*.05,er=S*.045;
+  [-1,1].forEach(d=>{const x=cx+d*ex;
+    if(k==="D"){ctx.strokeStyle=fg;ctx.lineWidth=lw;ctx.beginPath();ctx.arc(x,ey-er*.2,er*.9,.15*Math.PI,.85*Math.PI);ctx.stroke();return}
+    ctx.fillStyle=dark?"#F3D35C":INK;ctx.beginPath();ctx.ellipse(x,ey,er*.85,er*(k==="H"?.7:1.1),0,0,Math.PI*2);ctx.fill();
+    if(dark){ctx.fillStyle=INK;ctx.beginPath();ctx.ellipse(x,ey,er*.25,er*.9,0,0,Math.PI*2);ctx.fill()}
+    else{ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(x+er*.3,ey-er*.4,er*.32,0,Math.PI*2);ctx.fill()}
+    if(k==="H"){ctx.fillStyle=t.fur===INK?INK:(d>0?t.patch2:t.fur);ctx.fillRect(x-er,ey-er*1.3,er*2,er*.75);ctx.strokeStyle=fg;ctx.lineWidth=lw*.8;ctx.beginPath();ctx.moveTo(x-er,ey-er*.55);ctx.lineTo(x+er,ey-er*.55);ctx.stroke()}
+    if(k==="G"){ctx.strokeStyle=fg;ctx.lineWidth=lw;ctx.beginPath();ctx.moveTo(x-d*er*1.3,ey-er*2.2);ctx.lineTo(x+d*er*.9,ey-er*1.5);ctx.stroke()}
+  });
+  // blush
+  if(k==="A"||k==="F"||k==="B"){ctx.fillStyle="rgba(255,116,102,.45)";[-1,1].forEach(d=>{ctx.beginPath();ctx.ellipse(cx+d*rx*.62,cy+ry*.25,er*1.1,er*.6,0,0,Math.PI*2);ctx.fill()})}
+  // nose + mouth
+  const ny=cy+ry*.22;ctx.fillStyle="#F27F86";ctx.beginPath();ctx.moveTo(cx-S*.022,ny-S*.012);ctx.lineTo(cx+S*.022,ny-S*.012);ctx.lineTo(cx,ny+S*.014);ctx.closePath();ctx.fill();
+  ctx.strokeStyle=fg;ctx.lineWidth=lw*.8;ctx.beginPath();
+  if(k==="G"){ctx.moveTo(cx-S*.035,ny+S*.045);ctx.lineTo(cx+S*.035,ny+S*.045)}
+  else{ctx.arc(cx-S*.022,ny+S*.018,S*.022,.1*Math.PI,.9*Math.PI);ctx.moveTo(cx+S*.044,ny+S*.022);ctx.arc(cx+S*.022,ny+S*.018,S*.022,.1*Math.PI,.9*Math.PI)}
+  ctx.stroke();
+  // whiskers
+  ctx.lineWidth=lw*.5;[-1,1].forEach(d=>{[-.05,.02].forEach(o=>{ctx.beginPath();ctx.moveTo(cx+d*rx*.5,ny+S*o*.6);ctx.lineTo(cx+d*rx*1.12,ny+S*o*1.6);ctx.stroke()})});
+  // accessories
+  ctx.lineWidth=lw;ctx.strokeStyle=INK;
+  if(k==="A"){heart(ctx,cx+rx*.95,cy-ry*1.35,S*.07,"#FF7466")}
+  if(k==="B"){const x=cx+rx*.62,y=cy-ry*1.5,w=S*.2,h=S*.14;rr(ctx,x,y,w,h,S*.025);ctx.fillStyle="#FFFFFF";ctx.fill();ctx.stroke();
+    ctx.beginPath();ctx.arc(x+w/2,y+h/2,h*.3,0,Math.PI*2);ctx.fillStyle="#2FA37C";ctx.fill();ctx.stroke();ctx.fillStyle=INK;ctx.fillRect(x+w*.12,y-h*.16,w*.22,h*.16)}
+  if(k==="C"||k==="G"){const gc=k==="G"?"#F3D35C":INK;ctx.strokeStyle=gc;ctx.lineWidth=lw*1.1;
+    [-1,1].forEach(d=>{const x=cx+d*ex;ctx.beginPath();if(k==="C")ctx.arc(x,ey,er*1.9,0,Math.PI*2);else rr(ctx,x-er*1.9,ey-er*1.5,er*3.8,er*3,er*.5);ctx.stroke()});
+    ctx.beginPath();ctx.moveTo(cx-ex+er*1.9,ey);ctx.lineTo(cx+ex-er*1.9,ey);ctx.stroke()}
+  if(k==="D"){ctx.fillStyle=INK;ctx.font=`700 ${S*.09}px "ZCOOL KuaiLe",sans-serif`;ctx.fillText("z",cx+rx*.8,cy-ry*1.2);ctx.font=`700 ${S*.065}px "ZCOOL KuaiLe",sans-serif`;ctx.fillText("z",cx+rx*1.08,cy-ry*1.55)}
+  if(k==="E"){const y=cy-ry*1.02,w=rx*.75;ctx.beginPath();ctx.moveTo(cx-w/2,y);ctx.lineTo(cx-w/2,y-S*.1);ctx.lineTo(cx-w/4,y-S*.05);ctx.lineTo(cx,y-S*.13);ctx.lineTo(cx+w/4,y-S*.05);ctx.lineTo(cx+w/2,y-S*.1);ctx.lineTo(cx+w/2,y);ctx.closePath();ctx.fillStyle="#F6C744";ctx.fill();ctx.stroke()}
+  if(k==="F"){ctx.save();ctx.translate(cx-rx*.15,cy-ry*.95);ctx.rotate(-.25);ctx.beginPath();ctx.moveTo(-S*.08,0);ctx.lineTo(S*.08,0);ctx.lineTo(0,-S*.2);ctx.closePath();ctx.fillStyle="#2FA37C";ctx.fill();
+    ctx.save();ctx.clip();ctx.fillStyle="#FFFFFF";[-.06,-.13].forEach(y=>ctx.fillRect(-S*.1,S*y,S*.2,S*.025));ctx.restore();ctx.stroke();ctx.beginPath();ctx.arc(0,-S*.2,S*.025,0,Math.PI*2);ctx.fillStyle="#FF7466";ctx.fill();ctx.restore()}
+  if(k==="H"){ctx.strokeStyle="#2FA37C";ctx.lineWidth=lw*1.2;ctx.beginPath();ctx.moveTo(cx-rx*.45,cy+ry*.82);ctx.lineTo(cx,cy+ry*1.2);ctx.lineTo(cx+rx*.45,cy+ry*.82);ctx.stroke();
+    const w=S*.17,h=S*.12;rr(ctx,cx-w/2,cy+ry*1.12,w,h,S*.015);ctx.fillStyle="#FFFFFF";ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=lw;ctx.stroke();
+    ctx.fillStyle=INK;ctx.font=`900 ${S*.065}px "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif`;ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText("工",cx,cy+ry*1.12+h/2+S*.004)}
+  ctx.restore();
+}
+function rr(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+function heart(ctx,x,y,s,c){ctx.beginPath();ctx.moveTo(x,y+s*.35);ctx.bezierCurveTo(x-s*1.1,y-s*.4,x-s*.4,y-s*1.1,x,y-s*.4);ctx.bezierCurveTo(x+s*.4,y-s*1.1,x+s*1.1,y-s*.4,x,y+s*.35);ctx.fillStyle=c;ctx.fill();ctx.lineWidth=s*.12;ctx.strokeStyle=INK;ctx.stroke()}
+const paint=(id,k)=>{const c=document.getElementById(id);drawCat(c.getContext("2d"),c.width,k)};
+
+/* ---------- app ---------- */
+const $=id=>document.getElementById(id);
+let ans=[],cur=0,last=null;
+function show(v){["cover","quiz","result"].forEach(n=>{const el=$("v-"+n);el.hidden=n!==v;if(n===v){el.classList.remove("enter");void el.offsetWidth;el.classList.add("enter")}});window.scrollTo(0,0)}
+function renderQ(){
+  const [text,opts]=Q[cur];
+  $("qno").textContent=`第 ${cur+1} 题`;$("qtext").textContent=text;
+  $("count").textContent=`${cur+1} / ${Q.length}`;$("barFill").style.width=(cur/Q.length*100)+"%";
+  $("backBtn").disabled=cur===0;
+  const box=$("opts");box.innerHTML="";
+  opts.forEach(([label],i)=>{const b=document.createElement("button");b.className="opt"+(ans[cur]===i?" on":"");
+    b.innerHTML=`<b>${"ABCD"[i]}</b><span></span>`;b.lastChild.textContent=label;
+    b.onclick=()=>{ans[cur]=i;b.classList.add("on");setTimeout(()=>{if(cur<Q.length-1){cur++;renderQ()}else finish()},180)};box.appendChild(b)});
+}
+function finish(){const r=score(ans);last=r;try{location.hash=hashOf(r)}catch(e){}renderResult(r,false)}
+const hashOf=r=>"r-"+r.type.toLowerCase()+"-"+r.pct.join("-");
+function parseHash(){const m=/^#r-([a-h])((?:-\d{1,2}){5})$/.exec(location.hash);if(!m)return null;return{type:m[1].toUpperCase(),pct:m[2].slice(1).split("-").map(Number)}}
+function renderResult(r,friend){
+  const t=T[r.type];paint("resCat",r.type);
+  $("friendNote").hidden=!friend;$("selfActions").hidden=friend;$("friendActions").hidden=!friend;
+  $("rlabel").textContent=friend?"朋友是":"你是";
+  $("rname").textContent=t.name;$("rtitle").textContent=t.title;$("rare").hidden=!t.rare;
+  $("rtags").innerHTML="";t.tags.forEach(g=>{const s=document.createElement("span");s.textContent=g;$("rtags").appendChild(s)});
+  $("rdesc").textContent=t.desc;$("rsays").textContent="“"+t.says+"”";
+  {const c=$("rdims");const x=c.getContext("2d");x.clearRect(0,0,c.width,c.height);radar(x,c.width/2,c.height/2+16,150,r.pct,1);c.setAttribute("aria-label","铲屎五维："+DIMS.map((d,j)=>DIM_NAMES[d]+r.pct[j]).join("，"))}
+  $("rrel").innerHTML="";
+  [["最合拍",t.match,"一起养猫不吵架"],["相爱相杀",t.rival,"养猫观念打一架"]].forEach(([lab,k,note])=>{const b=document.createElement("button");
+    b.innerHTML=`<small>${lab}</small><strong>${T[k].name}</strong><span>${note}</span>`;b.onclick=()=>peek(k);$("rrel").appendChild(b)});
+  $("posterBox").hidden=true;$("linkBox").hidden=true;
+  show("result");
+}
+function peek(k){const t=T[k];toast(`${t.name}：${t.title}`)}
+let tt;function toast(m){const el=$("toast");el.textContent=m;el.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>el.classList.remove("show"),2200)}
+function shareLink(){return PAGE_URL+"#"+hashOf(last)}
+$("startBtn").onclick=()=>{ans=[];cur=0;renderQ();show("quiz")};
+$("backBtn").onclick=()=>{if(cur>0){cur--;renderQ()}};
+$("againBtn").onclick=()=>{try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}ans=[];cur=0;show("cover")};
+$("tryBtn").onclick=()=>{ans=[];cur=0;renderQ();show("quiz")};
+$("shareBtn").onclick=()=>{const url=shareLink();const text=`我是「${T[last.type].name}」，${T[last.type].title}。你是什么样的铲屎官？ ${url}`;
+  const box=$("linkBox");box.textContent=text;box.hidden=false;
+  const sel=()=>{const rg=document.createRange();rg.selectNodeContents(box);const s=getSelection();s.removeAllRanges();s.addRange(rg);toast("已选中，手动复制一下")};
+  try{navigator.clipboard.writeText(text).then(()=>toast("已复制，发给朋友吧"),sel)}catch(e){sel()}};
+$("posterBtn").onclick=async()=>{try{await document.fonts.ready}catch(e){}$("posterImg").src=moments(last);$("posterBox").hidden=false;$("posterBox").scrollIntoView({behavior:"smooth",block:"center"})};
+
+
+function radar(x,cx,cy,Rr,pct,sc){
+  const n=DIMS.length,ang=i=>-Math.PI/2+i*2*Math.PI/n,pt=(i,f)=>[cx+Math.cos(ang(i))*Rr*f,cy+Math.sin(ang(i))*Rr*f];
+  x.save();x.lineJoin="round";
+  [1,.75,.5,.25].forEach((f,li)=>{x.beginPath();for(let i=0;i<n;i++){const [px,py]=pt(i,f);i?x.lineTo(px,py):x.moveTo(px,py)}x.closePath();
+    x.fillStyle=li%2?"#FFFFFF":"#EEF6F2";x.fill();x.strokeStyle="#CFE0D7";x.lineWidth=2;x.stroke()});
+  for(let i=0;i<n;i++){const [px,py]=pt(i,1);x.beginPath();x.moveTo(cx,cy);x.lineTo(px,py);x.strokeStyle="#CFE0D7";x.lineWidth=2;x.stroke()}
+  x.beginPath();pct.forEach((v,i)=>{const [px,py]=pt(i,Math.max(.06,v/100));i?x.lineTo(px,py):x.moveTo(px,py)});x.closePath();
+  x.fillStyle="rgba(255,116,102,.32)";x.fill();x.strokeStyle="#FF7466";x.lineWidth=5;x.stroke();
+  pct.forEach((v,i)=>{const [px,py]=pt(i,Math.max(.06,v/100));x.beginPath();x.arc(px,py,8,0,Math.PI*2);x.fillStyle="#FFFFFF";x.fill();x.lineWidth=4;x.strokeStyle="#FF7466";x.stroke()});
+  DIMS.forEach((d,i)=>{const [lx,ly]=pt(i,1.24);const c=Math.cos(ang(i));x.textAlign=Math.abs(c)<.2?"center":c>0?"left":"right";
+    const ox=Math.abs(c)<.2?0:(c>0?-18:18);x.textBaseline="middle";
+    x.fillStyle="#1F2A37";x.font=`500 ${30*sc}px "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif`;x.fillText(DIM_NAMES[d],lx+ox,ly-(i===0?14:16)*sc);
+    x.fillStyle="#FF7466";x.font=`900 ${34*sc}px "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif`;x.fillText(pct[i],lx+ox,ly+(i===0?20:20)*sc)});
+  x.restore();
+}
+/* ---------- poster ---------- */
+function poster(r,noFooter){
+  const W=1080,H=1440,c=document.createElement("canvas");c.width=W;c.height=H;const x=c.getContext("2d");const t=T[r.type];
+  x.fillStyle="#E6F2EC";x.fillRect(0,0,W,H);x.fillStyle="#CFE0D7";for(let i=20;i<W;i+=44)for(let j=20;j<H;j+=44){x.beginPath();x.arc(i,j,2.4,0,Math.PI*2);x.fill()}
+  x.fillStyle="#FF7466";rr(x,84,84,W-156,H-196,48);x.fill();
+  x.fillStyle="#FFFFFF";x.strokeStyle=INK;x.lineWidth=5;rr(x,72,72,W-156,H-196,48);x.fill();x.stroke();
+  const cat=document.createElement("canvas");cat.width=cat.height=420;drawCat(cat.getContext("2d"),420,r.type);x.drawImage(cat,W/2-210,110);
+  x.textAlign="center";x.fillStyle="#5E6B78";x.font='500 34px "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif';x.fillText("测出来我是",W/2,560);
+  x.fillStyle=INK;x.font='96px "ZCOOL KuaiLe",sans-serif';x.fillText(t.name,W/2,670);
+  x.fillStyle="#FF7466";x.font='700 40px "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif';x.fillText(t.title,W/2,738);
+  let tx=W/2-(t.tags.length*190)/2;x.font='500 30px "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif';
+  const widths=t.tags.map(g=>x.measureText(g).width+48);const tot=widths.reduce((a,b)=>a+b,0)+(t.tags.length-1)*16;tx=W/2-tot/2;
+  t.tags.forEach((g,i)=>{x.fillStyle="#D3EDE2";rr(x,tx,780,widths[i],54,27);x.fill();x.fillStyle=INK;x.fillText(g,tx+widths[i]/2,818);tx+=widths[i]+16});
+  radar(x,W/2,1046,130,r.pct,.92);
+  x.fillStyle="#E6F2EC";rr(x,150,1218,W-300,92,24);x.fill();x.fillStyle="#5E6B78";x.font='500 28px "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif';x.textAlign="center";
+  const says="猫说："+t.says;x.fillText(says.length>24?says.slice(0,24)+"…":says,W/2,1274);
+  if(!noFooter){x.fillStyle=INK;x.font='34px "ZCOOL KuaiLe",sans-serif';x.fillText("测测你是什么样的铲屎官",W/2,H-62)}
+  return c;
+}
+function drawQR(x,X,Y,S,text){
+  x.fillStyle="#FFFFFF";x.fillRect(X,Y,S,S);
+  const q=qrcode(0,"M");q.addData(text);q.make();const n=q.getModuleCount(),pad=S*.05,m=(S-pad*2)/n;
+  x.fillStyle="#1F2A37";for(let i=0;i<n;i++)for(let j=0;j<n;j++)if(q.isDark(i,j))x.fillRect(X+pad+j*m,Y+pad+i*m,m+.4,m+.4);
+}
+function moments(r){
+  const W=1080,H=1920,c=document.createElement("canvas");c.width=W;c.height=H;const x=c.getContext("2d");
+  x.drawImage(poster(r,true),0,64);
+  x.fillStyle="#E6F2EC";x.fillRect(0,0,W,64);x.fillRect(0,1504,W,H-1504);x.fillStyle="#CFE0D7";
+  for(let i=20;i<W;i+=44)for(let j=20;j<H;j+=44){if(j>64&&j<1504)continue;x.beginPath();x.arc(i,j,2.4,0,Math.PI*2);x.fill()}
+  const top=1480,bh=340;x.fillStyle="#2FA37C";rr(x,84,top+12,W-156,bh,40);x.fill();
+  x.fillStyle="#FFFFFF";x.strokeStyle=INK;x.lineWidth=5;rr(x,72,top,W-156,bh,40);x.fill();x.stroke();
+  const q=260;drawQR(x,120,top+40,q,PAGE_URL+"#"+hashOf(r));x.strokeStyle=INK;x.lineWidth=3;x.strokeRect(120,top+40,q,q);
+  x.textAlign="left";x.fillStyle=INK;x.font='58px "ZCOOL KuaiLe",sans-serif';x.fillText("你是什么样的铲屎官？",430,top+128);
+  x.fillStyle="#5E6B78";x.font='500 32px "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif';x.fillText("长按识别二维码，测测你自己",430,top+192);
+  x.fillStyle="#2FA37C";x.font='700 30px "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif';x.fillText("20 道题 · 2 分钟 · 你是哪一种？",430,top+252);
+  return c.toDataURL("image/png");
+}
+
+/* ---------- boot ---------- */
+(async()=>{try{await document.fonts.ready}catch(e){}paint("coverCat",["A","B","E","H"][Math.floor(Math.random()*4)]);
+  const h=parseHash();if(h&&T[h.type]){last=h;renderResult(h,true)}})();
+window.addEventListener("hashchange",()=>{const h=parseHash();if(h&&T[h.type]&&(!last||hashOf(last)!==hashOf(h))){last=h;renderResult(h,true)}});
+</script>
+</body>
+</html>
